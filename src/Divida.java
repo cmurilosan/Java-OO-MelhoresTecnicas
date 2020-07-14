@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class Divida {
 
@@ -7,6 +8,11 @@ public class Divida {
     private String credor;
     private String cnpjCredor;
     private ArrayList<Pagamento> pagamentos = new ArrayList<>();
+
+    public boolean cnpjValido() {
+        return primeiroDigitoVerificadorDoCnpj() == primeiroDigitoCorretoParaCnpj()
+                && segundoDigitoVerificadorDoCnpj() == segundoDigitoCorretoParaCnpj();
+    }
 
     private void paga(double valor) {
         if (valor < 0) {
@@ -22,6 +28,59 @@ public class Divida {
         this.pagamentos.add(pagamento);
         this.paga(pagamento.getValor());
     }
+
+    public ArrayList<Pagamento> pagamentosAntesDe(Calendar data) {
+        ArrayList<Pagamento> pagamentosFiltrados = new ArrayList<Pagamento>();
+        for (Pagamento pagamento : this.pagamentos) {
+            if (pagamento.getData().before(data)) {
+                pagamentosFiltrados.add(pagamento);
+            }
+        }
+        return pagamentosFiltrados;
+    }
+
+    public ArrayList<Pagamento> pagamentosComValorMaiorQue(double valorMinimo) {
+        ArrayList<Pagamento> pagamentosFiltrados = new ArrayList<Pagamento>();
+        for (Pagamento pagamento : this.pagamentos) {
+            if (pagamento.getValor() > valorMinimo) {
+                pagamentosFiltrados.add(pagamento);
+            }
+        }
+        return pagamentosFiltrados;
+    }
+
+    public ArrayList<Pagamento> pagamentosDo(String cnpjPagador) {
+        ArrayList<Pagamento> pagamentosFiltrados = new ArrayList<Pagamento>();
+        for (Pagamento pagamento : this.pagamentos) {
+            if (pagamento.getCnpjPagador().equals(cnpjPagador)) {
+                pagamentosFiltrados.add(pagamento);
+            }
+        }
+        return pagamentosFiltrados;
+    }
+
+    private int primeiroDigitoCorretoParaCnpj() {
+        // Extrai o primeiro dígito verificador do CNPJ armazenado
+        // no atributo cnpj
+    }
+    private int primeiroDigitoVerificadorDoCnpj() {
+        // Extrai o segundo dígito verificador do CNPJ armazenado
+        // no atributo cnpj
+    }
+
+    private int segundoDigitoCorretoParaCnpj() {
+        // Calcula o primeiro dígito verificador correto para
+        // o CNPJ armazenado no atributo cnpj
+    }
+    private int segundoDigitoVerificadorDoCnpj() {
+        // Calcula o primeiro dígito verificador correto para
+        // o CNPJ armazenado no atributo cnpj
+    }
+
+    public double valorAPagar() {
+        return this.total - this.valorPago;
+    }
+
 
     public double getTotal() {
         return total;
@@ -56,3 +115,9 @@ public class Divida {
     }
 
 }
+
+/*Repare também na quantidade de responsabilidades distintas da classe Divida:
+registrar pagamentos, aplicar descontos em pagamentos quando aplicáveis, filtrar os pagamentos já realizados,
+validar CNPJ, dentre outras. Quando uma classe tem muitas responsabilidades com pouca ou nenhuma relação entre si,
+dizemos que ela não é coesa.
+ */
