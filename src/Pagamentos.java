@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 
 public class Pagamentos extends ArrayList<Pagamento> {
 
@@ -53,5 +54,19 @@ public class Pagamentos extends ArrayList<Pagamento> {
             valor = valor - 8;
         }
         this.valorPago += valor;
+    }
+
+    @Override
+    public boolean add(Pagamento e) {
+        this.paga(e.getValor());
+        return super.add(e);
+    }
+
+    @Override
+    public boolean addAll(Collection<? extends Pagamento> c) {
+        for(Pagamento pagamento : c) {
+            this.paga(pagamento.getValor());
+        }
+        return super.addAll(c);
     }
 }
