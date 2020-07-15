@@ -8,7 +8,7 @@ public class BalancoEmpresa {
         Divida divida = new Divida();
         divida.setTotal(valor);
         divida.setCredor(credor);
-        divida.setCnpjCredor(cnpjCredor);
+        divida.getCnpjCredor().setValor(cnpjCredor);    // agora usamos o getter e depois o setter
         dividas.put(cnpjCredor, divida);
     }
 
@@ -19,8 +19,7 @@ public class BalancoEmpresa {
             pagamento.setCnpjPagador(cnpjPagador);
             pagamento.setPagador(nomePagador);
             pagamento.setValor(valor);
-            divida.paga(valor);
-            divida.registra(pagamento);
+            divida.getPagamentos().registra(pagamento);
         }
     }
 }
