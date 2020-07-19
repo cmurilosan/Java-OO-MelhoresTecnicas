@@ -1,11 +1,11 @@
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
+import java.util.HashSet;
 
 public class Pagamentos {
 
     private double valorPago;
-    private ArrayList<Pagamento> pagamentos = new ArrayList<>();
+    private HashSet<Pagamento> pagamentos = new HashSet<>();
 
     public ArrayList<Pagamento> pagamentosAntesDe(Calendar data) {
         ArrayList<Pagamento> pagamentosFiltrados = new ArrayList<Pagamento>();

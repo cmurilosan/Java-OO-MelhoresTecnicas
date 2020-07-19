@@ -1,10 +1,8 @@
-import java.util.Objects;
-
-public class Cnpj implements Documento{
+public class Cpf implements Documento{
 
     private String valor;
 
-    public Cnpj(String valor) {
+    public Cpf(String valor) {
         this.valor = valor;
     }
 
@@ -12,19 +10,22 @@ public class Cnpj implements Documento{
         return primeiroDigitoVerificador() == primeiroDigitoCorreto()
                 && segundoDigitoVerificador() == segundoDigitoCorreto();
     }
+    public String getValor() {
+        return this.valor;
+    }
 
-    @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Cnpj cnpj = (Cnpj) o;
-        return Objects.equals(valor, cnpj.valor);
+        if (!(o instanceof Cpf)) {
+            return false;
+        }
+        Cpf outro = (Cpf) o;
+        return this.valor.equals(outro.valor);
     }
 
-    @Override
     public int hashCode() {
-        return Objects.hash(valor);
+        return this.valor.hashCode();
     }
+
 
     private int primeiroDigitoCorreto() {
         // Extrai o primeiro dígito verificador do CNPJ armazenado
@@ -46,20 +47,5 @@ public class Cnpj implements Documento{
         // Calcula o primeiro dígito verificador correto para
         // o CNPJ armazenado no atributo cnpj
         return 2;
-    }
-
-    public String getValor() {
-
-        return valor;
-    }
-
-    public void setValor(String novoValor) {
-
-        this.valor = novoValor;
-    }
-
-    @Override
-    public String toString() {
-        return this.valor;
     }
 }
